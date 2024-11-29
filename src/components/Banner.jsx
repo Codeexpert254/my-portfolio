@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { ArrowRightCircle } from "react-bootstrap-icons";
-import headerImg from "../assets/img/programmer.svg"
+import headerImg from "../assets/img/programmer.svg";
 
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
@@ -50,6 +50,17 @@ export const Banner = () => {
     };
   }, [tick, delta]);
 
+  // WhatsApp link handler function
+  const handleConnectClick = () => {
+    // Replace with your own WhatsApp number (including country code, e.g., 2547xxxxxxx)
+    const phoneNumber = "254707529079";
+    const message = "Hello, I would like to connect!";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section className="banner" id="home">
       <Container>
@@ -67,7 +78,7 @@ export const Banner = () => {
               expertise in React, allows me to create dynamic, interactive web
               applications with clean, user-friendly interfaces.
             </p>
-            <button onClick={() => console.log("connect")}>
+            <button onClick={handleConnectClick}>
               Let’s Connect <ArrowRightCircle size={25} />
             </button>
           </Col>

@@ -27,6 +27,15 @@ export const NavBar = () => {
     setActiveLink(value);
   };
 
+  const handleConnectClick = () => {
+    // Replace with your own WhatsApp number (including country code, e.g., 2547xxxxxxx)
+    const phoneNumber = "254707529079";
+    const message = "Hello, I would like to connect!";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <Navbar expand="lg" className={scrolled ? "scrolled" : ""}>
       <Container>
@@ -82,8 +91,7 @@ export const NavBar = () => {
                 <img src={navIcon4} alt="Behance" />
               </a>
             </div>
-            <button className="vvd" onClick={() => console.log("connect")}>
-              {" "}
+            <button className="vvd" onClick={handleConnectClick}>
               <span>Lets Connect</span>
             </button>
           </span>
