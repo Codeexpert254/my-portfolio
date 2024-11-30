@@ -19,6 +19,6 @@ export default defineConfig({
     setupFiles: './setupTests.js', // Optional: for custom setup
   },
   server: {
-    port: 3000,
+    port: 5173,
   },
 });

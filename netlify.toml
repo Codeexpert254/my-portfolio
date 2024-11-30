@@ -1,0 +1,8 @@
+[build]
+  functions = "netlify/functions"  # This should point to the correct directory for your functions
+  targetPort = 5173 
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

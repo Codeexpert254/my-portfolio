@@ -2,7 +2,7 @@ import { Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import PropTypes from 'prop-types';
-
+import React from "react";
 
 const Newsletter = ({status, message }) => {
 

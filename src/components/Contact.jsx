@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../assets/img/contact-img.svg";
 
@@ -25,25 +26,42 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        contentType: "Application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send");
-    let result = response.json();
-    setFormDetails(formInitialDetails);
-    if (result.code === 200) {
-      setStatus({ success: true, message: "Message sent successfully" });
-    } else {
+    try {
+      const response = await fetch("/.netlify/functions/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(formDetails),
+      });
+      
+    
+      console.log("Raw response:", response);
+    
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+    
+      const result = await response.json();
+      console.log("Parsed result:", result);
+    
+      if (result.code === 200) {
+        setStatus({ success: true, message: "Message sent successfully" });
+        setButtonText("Sent");
+        setFormDetails(formInitialDetails); // Clear form
+        setTimeout(() => setButtonText("Send"), 3000); // Reset after 3 seconds
+      } else {
+        throw new Error(result.message || "Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error caught", error);
       setStatus({
         success: false,
-        message: "Something went wrong. Please Try again.",
+        message: "Something went wrong. Please try again.",
       });
+      setButtonText("Send");
     }
-  };
+  };    
 
   return (
     <section className="contact" id="connect">
@@ -92,7 +110,7 @@ export const Contact = () => {
                 />
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col>
                 <textarea
                   rows="6"
@@ -113,7 +131,27 @@ export const Contact = () => {
                   </p>
                 </Col>
               )}
-            </Row>
+            </Row> */}
+            <Row>
+  <Col>
+    <textarea
+      rows="6"
+      value={formDetails.message}
+      placeholder="Message"
+      onChange={(e) => onFormUpdate("message", e.target.value)}
+    ></textarea>
+    <button type="submit">
+      <span>{buttonText}</span>
+    </button>
+  </Col>
+  {status.message && (
+    <Col>
+      <p className={status.success === false ? "danger" : "success"}>
+        {status.message}
+      </p>
+    </Col>
+  )}
+</Row>
           </form>
         </Row>
       </Container>
