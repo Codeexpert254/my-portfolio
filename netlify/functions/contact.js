@@ -1,4 +1,5 @@
 
+
 /* eslint-disable no-undef */
 const nodemailer = require("nodemailer");
 
@@ -46,5 +47,3 @@ exports.handler = async (event) => {
 
 
 /* eslint-enable no-undef */
-
-
